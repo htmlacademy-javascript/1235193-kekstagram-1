@@ -30,6 +30,11 @@ const DESCRIPTION = [
 ];
 
 const SIMILAR_PHOTO_COUNT = 25;
+const SIMILAR_COMMENT_ID = 300;
+const MIN_NUMBER_LIKES = 15;
+const MAX_NUMBER_LIKES = 200;
+const MAX_NUMBER_COMMENT = 20;
+const MAX_NUMBER_AVATAR = 6;
 
 //Генерирует случайное число из диапазона a-b
 const getRandomInteger = (a, b) => {
@@ -39,24 +44,45 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
+//создает уникальный номер
+const createRandomRange = (min, max) => {
+  const previousValues = [];
+  return () => {
+    let randomNumber = getRandomInteger(min, max);
+    if(previousValues.length >= (max - min + 1)) {
+      console.error(`Перебраны все числа диапазона от ${min} до ${max}`);
+      return null;
+    }
+    while(previousValues.includes(randomNumber)){
+      randomNumber = getRandomInteger(min, max);
+    }
+    previousValues.push(randomNumber);
+    return randomNumber;
+  };
+};
+
+const generateUniqueId = createRandomRange(1, SIMILAR_PHOTO_COUNT);
+const generateUniqueUrl = createRandomRange(1, SIMILAR_PHOTO_COUNT);
+const generateUniqueCommentId = createRandomRange(1, SIMILAR_COMMENT_ID);
+
 //генерирует случайный индекс массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 //создает объект комментария
 const createComment = () => ({
-  id: getRandomInteger(1, 300),
-  avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg',
+  id: generateUniqueCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, MAX_NUMBER_AVATAR)}.svg`,
   message: getRandomArrayElement(MESSAGE),
   name: getRandomArrayElement(NAMES),
 });
 
 //создает объект фото
 const createPhoto = () => ({
-  id: getRandomInteger(1, 25),
-  url: 'photos/' + getRandomInteger(1, 25) + '.jpg',
+  id: generateUniqueId(),
+  url: `photos/${generateUniqueUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
-  likes: getRandomInteger(15, 200),
-  comments: createComment(),
+  likes: getRandomInteger(MIN_NUMBER_LIKES, MAX_NUMBER_LIKES),
+  comments: Array.from({length: getRandomInteger(1, MAX_NUMBER_COMMENT)}, createComment),
 });
 
 //создает массив из объектов фотографий
