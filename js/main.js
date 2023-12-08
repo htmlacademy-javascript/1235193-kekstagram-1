@@ -31,8 +31,8 @@ const DESCRIPTION = [
 
 const SIMILAR_PHOTO_COUNT = 25;
 const SIMILAR_COMMENT_ID = 300;
-const MIN_NUMBER_LIKES = 15;
-const MAX_NUMBER_LIKES = 200;
+const MIN_COUNT_LIKES = 15;
+const MAX_COUNT_LIKES = 200;
 const MAX_NUMBER_COMMENT = 20;
 const MAX_NUMBER_AVATAR = 6;
 
@@ -81,7 +81,7 @@ const createPhoto = () => ({
   id: generateUniqueId(),
   url: `photos/${generateUniqueUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
-  likes: getRandomInteger(MIN_NUMBER_LIKES, MAX_NUMBER_LIKES),
+  likes: getRandomInteger(MIN_COUNT_LIKES, MAX_COUNT_LIKES),
   comments: Array.from({length: getRandomInteger(1, MAX_NUMBER_COMMENT)}, createComment),
 });
 
