@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Елена Попова](https://up.htmlacademy.ru/javascript-individual/1/user/1235193).
-* Наставник: [Виктория Никитина] (https://htmlacademy.ru/profile/id1217273).
+* Наставник: [Виктория Никитина](https://htmlacademy.ru/profile/id1217273).
 
 ---
 

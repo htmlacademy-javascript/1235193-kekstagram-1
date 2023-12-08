@@ -1,11 +1,10 @@
-
 //определяет, является ли слово палиндромом
 
 function isPalindrome(string) {
   const tempString = string.replaceAll(' ', '').toLowerCase();
   let reverseString = '';
   for (let i = tempString.length - 1; i >= 0; i--) {
-    reverseString += tempString.at(i);
+   reverseString += tempString.at(i);
   }
   return tempString === reverseString;
 }
@@ -22,11 +21,13 @@ const extractNumber = (string) => {
   let result = '';
   for (let i = 0; i < string.length; i++) {
     if (!Number.isNaN(parseInt(string.at(i), 10))) {
+
       result += string.at(i);
     }
   }
   return parseInt(result, 10);
 };
+
 
 extractNumber('1 кефир, 0.5 батона');
 
@@ -40,6 +41,7 @@ const myPadStart = (string, maxLength, pad) => {
   }
   return result;
 };
+
 
 myPadStart('q', 4, 'we');
 
@@ -185,3 +187,9 @@ const pluck = (characters) => {
 };
 
 console.log(pluck(characters));
+
+
+
+const isLessOrEqual = (string, lenght) =>string.lenght <= lenght;
+isLessOrEqual();
+
