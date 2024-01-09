@@ -4,7 +4,7 @@ function isPalindrome(string) {
   const tempString = string.replaceAll(' ', '').toLowerCase();
   let reverseString = '';
   for (let i = tempString.length - 1; i >= 0; i--) {
-   reverseString += tempString.at(i);
+    reverseString += tempString.at(i);
   }
   return tempString === reverseString;
 }
@@ -159,7 +159,7 @@ const sortByAge = (girls) => [...girls].sort((girl1, girl2) => girl2.age - girl1
 
 //перемножает два числа
 const getProduct = (multy1, multy2) => {
-  let result = multy1*multy2;
+  let result = multy1 * multy2;
   //console.log(result);
 };
 
@@ -186,10 +186,18 @@ const pluck = (characters) => {
   return names;
 };
 
-console.log(pluck(characters));
+// console.log(pluck(characters));
 
 
 
-const isLessOrEqual = (string, lenght) =>string.lenght <= lenght;
-isLessOrEqual();
+// const isLessOrEqual = (string, lenght) =>string.lenght <= lenght;
 
+
+//вывести в консоль числа
+const printNumber = (number1, number2) => {
+  for (let i = number1; i <= number2; i++) {
+    console.log(i);
+  }
+};
+
+// printNumber(1, 10);
