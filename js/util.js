@@ -11,11 +11,11 @@ const createRandomRange = (min, max) => {
   const previousValues = [];
   return () => {
     let randomNumber = getRandomInteger(min, max);
-    if(previousValues.length >= (max - min + 1)) {
+    if (previousValues.length >= (max - min + 1)) {
       console.error(`Перебраны все числа диапазона от ${min} до ${max}`);
       return null;
     }
-    while(previousValues.includes(randomNumber)){
+    while (previousValues.includes(randomNumber)) {
       randomNumber = getRandomInteger(min, max);
     }
     previousValues.push(randomNumber);
@@ -26,6 +26,10 @@ const createRandomRange = (min, max) => {
 //генерирует случайный индекс массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomArrayElement};
-export {createRandomRange};
-export {getRandomInteger};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export { getRandomArrayElement };
+export { createRandomRange };
+export { getRandomInteger };
+export { isEscapeKey };
