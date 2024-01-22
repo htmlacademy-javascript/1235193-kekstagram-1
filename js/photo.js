@@ -12,7 +12,7 @@ import {
 let generateUniqueId = null;
 let generateUniqueUrl = null;
 
-//создает объект фото
+//создает объект данных для фото
 const createPhoto = () => ({
   id: generateUniqueId(),
   url: `photos/${generateUniqueUrl()}.jpg`,
@@ -21,7 +21,7 @@ const createPhoto = () => ({
   comments: Array.from({ length: getRandomInteger(1, MAX_NUMBER_COMMENT) }, createComment),
 });
 
-//создает массив из объектов фотографий
+//создает массив из объектов данных для фотографий
 const similarPhoto = (countPhoto) => {
   generateUniqueId = createRandomRange(1, countPhoto);
   generateUniqueUrl = createRandomRange(1, countPhoto);

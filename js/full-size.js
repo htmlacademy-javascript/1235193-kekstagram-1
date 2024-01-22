@@ -1,9 +1,16 @@
 import { isEscapeKey } from './util.js';
+import { COMMENTS_PER_PORTION } from './constans.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const commentsList = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img');
+const commentsLoader = document.querySelector('.comments-loader');
+
+let commentsShown = 0;
+let comments = [];
+
 
 // создание одного комментария в li
 const createComment = (obj) => {
@@ -26,13 +33,25 @@ const createComment = (obj) => {
 };
 
 //отрисовка списка комментариев через добавление фрагмента с лишками в ul
-const renderComments = (arr) => {
-  commentsList.innerHTML = '';
+const renderComments = (comments) => {
+  commentsShown += COMMENTS_PER_PORTION;
+
+  if (commentsShown >= comments.length) {
+    commentsLoader.classList.add('hidden');
+    commentsShown = comments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
   const fragment = document.createDocumentFragment();
 
-  arr.forEach((item) => {
-    fragment.appendChild(createComment(item));
-  });
+  for (let i = 0; i < commentsShown; i++) {
+    const commentElement = createComment(comments[i]);
+    fragment.append(commentElement);
+
+  }
+
+  commentsList.innerHTML = '';
   commentsList.append(fragment);
 };
 
@@ -51,7 +70,7 @@ const onBigPictureCloseButtonClick = (evt) => {
 };
 
 // функция, выполняющая действия с DOM-элементами при закрытии большого изображения
-function hideBigPicture () {
+function hideBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
@@ -59,11 +78,11 @@ function hideBigPicture () {
 }
 
 //функция для показа большого изображения
-const showBigPicture = ({url, likes, comments, description}) => {
+const showBigPicture = ({ url, likes, comments, description }) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  bigPicture.querySelector('img').src = url;
+  bigPictureImg.querySelector('img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
@@ -75,4 +94,4 @@ const showBigPicture = ({url, likes, comments, description}) => {
   bigPictureCloseButton.addEventListener('click', onBigPictureCloseButtonClick);
 };
 
-export {showBigPicture};
+export { showBigPicture };

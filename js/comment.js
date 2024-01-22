@@ -25,7 +25,7 @@ const MAX_NUMBER_AVATAR = 6;
 
 const generateUniqueCommentId = createRandomRange(1, SIMILAR_COMMENT_ID);
 
-//создает объект комментария
+//создает объект данных для комментария
 const createComment = () => ({
   id: generateUniqueCommentId(),
   avatar: `img/avatar-${getRandomInteger(1, MAX_NUMBER_AVATAR)}.svg`,

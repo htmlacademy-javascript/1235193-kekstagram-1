@@ -26,6 +26,7 @@ const createRandomRange = (min, max) => {
 //генерирует случайный индекс массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+//назначает клавишу Esc для событий
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
