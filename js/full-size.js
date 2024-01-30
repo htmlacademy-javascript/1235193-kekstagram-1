@@ -1,9 +1,22 @@
 import { isEscapeKey } from './util.js';
+import { COMMENTS_PER_PORTION } from './constans.js';
 
 const bigPicture = document.querySelector('.big-picture');
+const statistic = bigPicture.querySelector('.social__comment-count');
 const commentsList = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureImg = bigPicture.querySelector('.big-picture__img');
+const commentsLoader = document.querySelector('.comments-loader');
+
+// счетчик показа комментариев
+let commentsShown = 0;
+
+// массив отрисованных комментариев
+const allComments = [];
+
+// общее число комментариев
+let totalComments = 0;
 
 // создание одного комментария в li
 const createComment = (obj) => {
@@ -21,20 +34,41 @@ const createComment = (obj) => {
 
   comment.appendChild(avatar);
   comment.appendChild(socialText);
-
+  commentsShown = commentsShown + 1;
   return comment;
 };
 
-//отрисовка списка комментариев через добавление фрагмента с лишками в ul
-const renderComments = (arr) => {
-  commentsList.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-
-  arr.forEach((item) => {
-    fragment.appendChild(createComment(item));
-  });
-  commentsList.append(fragment);
+// функция для отрисовки или скрытия кнопки "Загрузить еще" в зависимости от количества комментариев
+const renderLoader = () => {
+  if (commentsShown < totalComments) {
+    commentsLoader.classList.remove('hidden');
+  } else {
+    commentsLoader.classList.add('hidden');
+  }
 };
+
+// функция для отрисовки строчки статистики показанных комментариев из их общего количества
+const renderStatistic = () => {
+  statistic.innerHTML = `${commentsShown} из <span class="comments-count">${totalComments}</span> комментариев`;
+};
+
+//отрисовка списка комментариев через добавление фрагмента с лишками в ul. Массив комментариев для отрисовки формируется методом splice(), который удаляет элементы из первоначального массива и возвращает удаленные элементы в виде нового массива
+const renderComments = () => {
+  const fragment = document.createDocumentFragment();
+  allComments.splice(0, COMMENTS_PER_PORTION).forEach((item) => {
+    fragment.append(createComment(item));
+  });
+
+  commentsList.append(fragment);
+  renderLoader();
+  renderStatistic();
+};
+
+commentsLoader.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  renderComments();
+});
+
 
 //функция для закрытия большого изображения по нажатию esc
 const onBigPictureEscKeydown = (evt) => {
@@ -51,7 +85,7 @@ const onBigPictureCloseButtonClick = (evt) => {
 };
 
 // функция, выполняющая действия с DOM-элементами при закрытии большого изображения
-function hideBigPicture () {
+function hideBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
@@ -59,20 +93,25 @@ function hideBigPicture () {
 }
 
 //функция для показа большого изображения
-const showBigPicture = ({url, likes, comments, description}) => {
+const showBigPicture = ({ url, likes, comments, description }) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  bigPicture.querySelector('img').src = url;
+  bigPictureImg.querySelector('img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
-  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
   bigPicture.querySelector('.comments-loader').classList.add('hidden');
 
-  renderComments(comments);
+  commentsList.innerHTML = '';
+  allComments.length = 0;
+  allComments.push(...comments.slice());
+  totalComments = comments.length;
+  commentsShown = 0;
+
+  renderComments();
   document.addEventListener('keydown', onBigPictureEscKeydown);
   bigPictureCloseButton.addEventListener('click', onBigPictureCloseButtonClick);
 };
 
-export {showBigPicture};
+export { showBigPicture, body };

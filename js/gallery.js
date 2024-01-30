@@ -1,8 +1,7 @@
 import { showBigPicture } from './full-size.js';
-import { renderPictures } from './pictures.js';
 import { userPicturesContainer } from './pictures.js';
 
-
+// функция слушает клик по миниатюре через их родителя, проверяет, что кликнули именно по миниатюре, ищет родителя с соответствующим дата-атрибутом, вызывает функцию для отрисовки большого изображения
 const renderGallery = (pictures) => {
   userPicturesContainer.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
@@ -10,12 +9,11 @@ const renderGallery = (pictures) => {
       return;
     }
 
+    evt.preventDefault();
     const picture = pictures.find(
       (item) => item.id === +thumbnail.dataset.thumbnailId);
     showBigPicture(picture);
   });
-
-  renderPictures(pictures, userPicturesContainer);
 };
 
 export { renderGallery };

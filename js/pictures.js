@@ -1,11 +1,11 @@
 const userPicturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
-
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+//  отрисовка миниатюр по шаблону и добавление их в контейнер
 const renderPictures = (pictures) => {
   const similarListFragment = document.createDocumentFragment();
 
   pictures.forEach(({ url, likes, comments, description, id }) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
+    const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
@@ -17,5 +17,5 @@ const renderPictures = (pictures) => {
   userPicturesContainer.append(similarListFragment);
 };
 
-export {renderPictures};
-export {userPicturesContainer};
+export { renderPictures };
+export { userPicturesContainer };
