@@ -59,3 +59,5 @@ const onFormSubmit = (evt) => {
 
 fileInput.addEventListener('change', onFileInputChange);
 imgForm.addEventListener('submit', onFormSubmit);
+
+
