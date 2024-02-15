@@ -2,11 +2,14 @@ import { body } from './full-size.js';
 import { resetScale } from './scale.js';
 import { isValid, reset } from './validation.js';
 import { resetEffects } from './effects.js';
+import { sendData } from './api.js';
+import { showError, showSuccess } from './popups.js';
 
 const imgForm = document.querySelector('.img-upload__form');
 const fileInput = imgForm.querySelector('.img-upload__input');
 const overlay = imgForm.querySelector('.img-upload__overlay');
 const closeButton = imgForm.querySelector('.img-upload__cancel');
+const submitButton = imgForm.querySelector('.img-upload__submit');
 
 // функция для открытия модального окна
 const showModal = () => {
@@ -50,14 +53,32 @@ const onFileInputChange = () => {
   showModal();
 };
 
-const onFormSubmit = (evt) => {
+const SubmitButtonText = {
+  QUIET: 'Опубликовать',
+  SENDING: 'Публикую',
+};
+
+const disableButton = (status = true) => {
+  submitButton.textContent = status ? SubmitButtonText.SENDING : SubmitButtonText.QUIET;
+  submitButton.disabled = status;
+};
+
+const onFormSubmit = async (evt) => {
   evt.preventDefault();
   if (isValid()) {
-    hideModal();
+    try {
+      const bodySubmit = new FormData(imgForm);
+      disableButton();
+      await sendData(bodySubmit);
+      disableButton(false);
+      hideModal();
+      showSuccess();
+    } catch (error) {
+      showError();
+      disableButton(false);
+    }
   }
 };
 
 fileInput.addEventListener('change', onFileInputChange);
 imgForm.addEventListener('submit', onFormSubmit);
-
-
