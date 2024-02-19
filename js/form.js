@@ -32,6 +32,10 @@ const hideModal = () => {
   resetEffects();
 };
 
+const setEscapeListener = () => {
+  document.addEventListener('keydown', onDocumentKeyDown);
+}
+
 // функция для закрытия окна при нажатии Esc
 function onDocumentKeyDown(evt) {
   if (evt.key === 'Escape') {
@@ -74,7 +78,8 @@ const onFormSubmit = async (evt) => {
       hideModal();
       showSuccess();
     } catch (error) {
-      showError();
+      showError(setEscapeListener);
+      document.removeEventListener('keydown', onDocumentKeyDown);
       disableButton(false);
     }
   }
