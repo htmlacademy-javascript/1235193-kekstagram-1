@@ -34,7 +34,7 @@ const hideModal = () => {
 
 const setEscapeListener = () => {
   document.addEventListener('keydown', onDocumentKeyDown);
-}
+};
 
 // функция для закрытия окна при нажатии Esc
 function onDocumentKeyDown(evt) {

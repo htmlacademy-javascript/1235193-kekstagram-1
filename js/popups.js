@@ -7,13 +7,13 @@ let restoreSomeHandlers = null;
 
 const hidePopup = () => {
   const popup = document.querySelector('.success') || document.querySelector('.error');
-  const isErrorPopup = document.querySelector('.error') ? true : false;
+  const isErrorPopup = document.querySelector('.error');
   popup.remove();
   document.removeEventListener('keydown', closePopupEsc);
   if(isErrorPopup){
     restoreSomeHandlers();
   }
-}
+};
 
 const closePopup = (evt) => {
   const popup = evt.target.closest('section');
@@ -25,14 +25,13 @@ function closePopupEsc(evt) {
   if (isEscapeKey(evt)) {
     hidePopup();
   }
-};
+}
 
 const closeByOverlay = (evt) => {
-  console.log(evt.target)
   if (evt.target.classList.contains('success') || evt.target.classList.contains('error')) {
-    hidePopup()
+    hidePopup();
   }
-}
+};
 
 const showSuccess = () => {
   const successComponent = success.cloneNode(true);
