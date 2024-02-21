@@ -51,4 +51,3 @@ const init = (loadedPictures, cb) => {
 };
 
 export { init, getFilteredPictures };
-

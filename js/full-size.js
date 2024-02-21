@@ -9,16 +9,12 @@ const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
 const commentsLoader = document.querySelector('.comments-loader');
 
-// счетчик показа комментариев
 let commentsShown = 0;
 
-// массив отрисованных комментариев
 const allComments = [];
 
-// общее число комментариев
 let totalComments = 0;
 
-// создание одного комментария в li
 const createComment = (obj) => {
   const comment = document.createElement('li');
   const avatar = document.createElement('img');
@@ -38,7 +34,6 @@ const createComment = (obj) => {
   return comment;
 };
 
-// функция для отрисовки или скрытия кнопки "Загрузить еще" в зависимости от количества комментариев
 const renderLoader = () => {
   if (commentsShown < totalComments) {
     commentsLoader.classList.remove('hidden');
@@ -47,12 +42,10 @@ const renderLoader = () => {
   }
 };
 
-// функция для отрисовки строчки статистики показанных комментариев из их общего количества
 const renderStatistic = () => {
   statistic.innerHTML = `${commentsShown} из <span class="comments-count">${totalComments}</span> комментариев`;
 };
 
-//отрисовка списка комментариев через добавление фрагмента с лишками в ul. Массив комментариев для отрисовки формируется методом splice(), который удаляет элементы из первоначального массива и возвращает удаленные элементы в виде нового массива
 const renderComments = () => {
   const fragment = document.createDocumentFragment();
   allComments.splice(0, COMMENTS_PER_PORTION).forEach((item) => {
@@ -70,7 +63,6 @@ commentsLoader.addEventListener('click', (evt) => {
 });
 
 
-//функция для закрытия большого изображения по нажатию esc
 const onBigPictureEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -78,13 +70,11 @@ const onBigPictureEscKeydown = (evt) => {
   }
 };
 
-//функция для закрытия большого изображния по нажатию кнопки с крестиком
 const onBigPictureCloseButtonClick = (evt) => {
   evt.preventDefault();
   hideBigPicture();
 };
 
-// функция, выполняющая действия с DOM-элементами при закрытии большого изображения
 function hideBigPicture() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -92,7 +82,6 @@ function hideBigPicture() {
   bigPictureCloseButton.removeEventListener('click', onBigPictureCloseButtonClick);
 }
 
-//функция для показа большого изображения
 const showBigPicture = ({ url, likes, comments, description }) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');

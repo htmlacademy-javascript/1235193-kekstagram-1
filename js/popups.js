@@ -50,5 +50,4 @@ const showError = (fn) => {
   document.querySelector('.error').addEventListener('click', closeByOverlay);
 };
 
-
 export { showSuccess, showError };

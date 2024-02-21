@@ -11,7 +11,6 @@ const overlay = imgForm.querySelector('.img-upload__overlay');
 const closeButton = imgForm.querySelector('.img-upload__cancel');
 const submitButton = imgForm.querySelector('.img-upload__submit');
 
-// функция для открытия модального окна
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -20,7 +19,6 @@ const showModal = () => {
   resetScale();
 };
 
-//функция для закрытия модального окна
 const hideModal = () => {
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -36,7 +34,6 @@ const setEscapeListener = () => {
   document.addEventListener('keydown', onDocumentKeyDown);
 };
 
-// функция для закрытия окна при нажатии Esc
 function onDocumentKeyDown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -46,13 +43,11 @@ function onDocumentKeyDown(evt) {
   }
 }
 
-// функция для закрытия окна при нажатии крестика
 function onCloseButtonClick(evt) {
   evt.preventDefault();
   hideModal();
 }
 
-// функция-обработчик при загрузки файла в инпут
 const onFileInputChange = () => {
   showModal();
 };
