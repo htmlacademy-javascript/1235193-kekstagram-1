@@ -14,6 +14,7 @@ const showAlert = (message) => {
   alert.style.textAlign = 'center';
   alert.style.backgroundColor = 'red';
   alert.textContent = message;
+  alert.classList.add('data-error');
   document.body.append(alert);
 
   setTimeout(() => {

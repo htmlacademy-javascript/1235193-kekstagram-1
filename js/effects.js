@@ -48,7 +48,8 @@ const onSliderUpdate = () => {
   imageElement.style.filter = isDefault()
     ? DEFAULT_EFFECT.style
     : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
-  effectLevelElement.value = sliderValue;
+  effectLevelElement.value = parseFloat(sliderValue);
+  console.log(effectLevelElement.value);
 };
 
 const resetEffects = () => {
