@@ -17,6 +17,7 @@ const showModal = () => {
   document.addEventListener('keydown', onDocumentKeyDown);
   closeButton.addEventListener('click', onCloseButtonClick);
   resetScale();
+  imgForm.addEventListener('submit', onFormSubmit);
 };
 
 const hideModal = () => {
@@ -28,6 +29,7 @@ const hideModal = () => {
   reset();
   resetScale();
   resetEffects();
+  imgForm.removeEventListener('submit', onFormSubmit);
 };
 
 const setEscapeListener = () => {
@@ -62,7 +64,7 @@ const disableButton = (status = true) => {
   submitButton.disabled = status;
 };
 
-const onFormSubmit = async (evt) => {
+async function onFormSubmit(evt) {
   evt.preventDefault();
   if (isValid()) {
     try {
@@ -78,7 +80,7 @@ const onFormSubmit = async (evt) => {
       disableButton(false);
     }
   }
-};
+}
 
 fileInput.addEventListener('change', onFileInputChange);
-imgForm.addEventListener('submit', onFormSubmit);
+

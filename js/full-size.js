@@ -7,7 +7,7 @@ const commentsList = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-const commentsLoader = document.querySelector('.comments-loader');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 let commentsShown = 0;
 
@@ -33,6 +33,11 @@ const createComment = (obj) => {
   commentsShown = commentsShown + 1;
   return comment;
 };
+const setLoaderListener = (evt) => {
+  evt.preventDefault();
+  renderComments();
+};
+
 
 const renderLoader = () => {
   if (commentsShown < totalComments) {
@@ -46,7 +51,7 @@ const renderStatistic = () => {
   statistic.innerHTML = `${commentsShown} из <span class="comments-count">${totalComments}</span> комментариев`;
 };
 
-const renderComments = () => {
+function renderComments() {
   const fragment = document.createDocumentFragment();
   allComments.splice(0, COMMENTS_PER_PORTION).forEach((item) => {
     fragment.append(createComment(item));
@@ -55,13 +60,7 @@ const renderComments = () => {
   commentsList.append(fragment);
   renderLoader();
   renderStatistic();
-};
-
-commentsLoader.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  renderComments();
-});
-
+}
 
 const onBigPictureEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -80,6 +79,7 @@ function hideBigPicture() {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPictureEscKeydown);
   bigPictureCloseButton.removeEventListener('click', onBigPictureCloseButtonClick);
+  commentsLoader.removeEventListener('click', setLoaderListener);
 }
 
 const showBigPicture = ({ url, likes, comments, description }) => {
@@ -101,6 +101,7 @@ const showBigPicture = ({ url, likes, comments, description }) => {
   renderComments();
   document.addEventListener('keydown', onBigPictureEscKeydown);
   bigPictureCloseButton.addEventListener('click', onBigPictureCloseButtonClick);
+  commentsLoader.addEventListener('click', setLoaderListener);
 };
 
 export { showBigPicture, body };
