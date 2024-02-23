@@ -7,7 +7,7 @@ const commentsList = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
 const bigPictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-const commentsLoader = document.querySelector('.comments-loader');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
 
 let commentsShown = 0;
 
